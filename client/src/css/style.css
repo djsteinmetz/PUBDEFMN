@@ -1,0 +1,58 @@
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+.In {
+    border-radius: 180px;
+    border: 1px solid #0b6527;
+    width: 80px;
+    padding: 5px;
+    background-color: #17863a4a;
+    color: #0b6527;
+}
+.Court {
+    border-radius: 180px;
+    border: 1px solid #0b5765;
+    width: 80px;
+    padding: 5px;
+    background-color: #18708042;
+    color: #0b5765;
+}
+.Jail {
+    border-radius: 180px;
+    border: 1px solid #650b0b;
+    width: 80px;
+    padding: 5px;
+    background-color: #86181828;
+    color: #650b0b;
+}
+.LEC {
+    border-radius: 180px;
+    border: 1px solid #d6801e;
+    width: 80px;
+    padding: 5px;
+    background-color: #ff88004d;
+    color: #d6801e;
+}
+.Out {
+    border-radius: 180px;
+    border: 1px solid #A7A7A7;
+    width: 80px;
+    padding: 5px;
+    background-color: #E7E7E7;
+    color: #A7A7A7;
+}
+.userSearch {
+    margin: 25px 0px 25px 0px;
+    max-width: 350px;
+}
+.userList {
+    padding: 15px;
+}
+.odd {
+    background-color: #f1f1f1;
+}
+.timestamp {
+    font-size: 12px;
+    margin-top: -10px;
+    color: #A7A7A7;
+}
