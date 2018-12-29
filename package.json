@@ -22,6 +22,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.17.2",
+    "dotenv": "^6.2.0",
     "express": "^4.15.4",
     "firebase": "^5.5.9",
     "if-env": "^1.0.4",

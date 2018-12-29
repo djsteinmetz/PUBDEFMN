@@ -10,15 +10,15 @@ const UserListItem = props => {
         <div className={`userList ${isEven(props.evenOdd) ? null : 'odd'}`}>
             <div className="container">
                 <div className="row">
-                    <div className="col-md-3">
-                        <p>{props.name}</p>
+                    <div className="col-md-3 col-9">
+                        <p className="allUserName">{props.name}</p>
                         <p className="timestamp">{moment(props.updated).format("MM/DD/YY, h:mm:ss a")}</p>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-2 col-1">
                         <p className={`text-center ${props.status}`}>{props.status}</p>
                     </div>
                     <div className="col-md-7">
-                        {props.notes !== "" ? <p>{props.notes}</p> : null}
+                        {props.notes !== "" ? <p className="note">{props.notes}</p> : null}
                     </div>
                 </div>
             </div>

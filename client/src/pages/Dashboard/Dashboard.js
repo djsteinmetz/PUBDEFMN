@@ -92,7 +92,7 @@ export default class App extends Component {
 
   clearNotes = e => {
     e.preventDefault();
-    this.setState({notes: ""});
+    this.setState({ notes: "" });
     this.handleChange(e);
   }
   handleStatusChange = e => {
@@ -112,13 +112,13 @@ export default class App extends Component {
     let updatedList = this.state.allUsers;
     console.log(updatedList)
     console.log(event.target.value)
-    updatedList = updatedList.filter(function(user) {
+    updatedList = updatedList.filter(function (user) {
       console.log(user.name.toLowerCase().search(event.target.value.toLowerCase()))
       return user.name.toLowerCase().search(
-      event.target.value.toLowerCase()) !== -1;
+        event.target.value.toLowerCase()) !== -1;
     });
     console.log(updatedList);
-    this.setState({filteredUsers: updatedList});
+    this.setState({ filteredUsers: updatedList });
   }
 
   render() {
@@ -130,40 +130,58 @@ export default class App extends Component {
         />
         {this.state.isLoggedIn === true ? (
           <span>
-            <div className="container">
-              <div className="row">
-                <div className="col-md-6">
-                  <p>{this.state.name}</p>
-                  <p>{this.state.status}</p>
-                  <p>{this.state.notes}</p>
-                  <p>{moment(this.state.updated).format("MM/DD/YY, h:mm:ss a")}</p>
-                </div>
-                <div className="col-md-6">
-                  <form onSubmit={this.handleStatusChange}>
-                    <div className="form-group">
-                      <label htmlFor="status">Example select</label>
-                      <select className="form-control" name="status" id="status" onChange={this.clearNotes}>
-                        <option disabled selected>Select a Status</option>
-                        <option>In</option>
-                        <option>Out</option>
-                        <option value="Court">Court (Specify Judge)</option>
-                        <option>LEC</option>
-                        <option>Jail</option>
-                      </select>
+            <div className="currentUser">
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="card">
+                      <div className="card-header">
+                        <div className="container">
+                          <div className="row">
+                            <div className="col-md-3 col-9">
+                              <p className="currentName">{this.state.name}</p>
+                              <p className="timestamp">{moment(this.state.updated).format("MM/DD/YY, h:mm:ss a")}</p>
+                            </div>
+                            <div className="col-md-2 col-1">
+                              <p className={`text-center currentStatus ${this.state.status}`}>{this.state.status}</p>
+                            </div>
+                            <div className="col-md-7">
+                              <p>{this.state.notes}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="card-body">
+                        <form onSubmit={this.handleStatusChange}>
+                          <div className="form-group">
+                            <label htmlFor="status">Example select</label>
+                            <select className="form-control" name="status" id="status" onChange={this.clearNotes}>
+                              <option disabled selected>Select a Status</option>
+                              <option>In</option>
+                              <option>Out</option>
+                              <option value="Court">Court (Specify Judge)</option>
+                              <option>LEC</option>
+                              <option>Jail</option>
+                            </select>
+                          </div>
+                          <div className="form-group">
+                            <label htmlFor="notes">Notes</label>
+                            <input onChange={this.handleChange} name="notes" className="form-control" id="notes" />
+                          </div>
+                          <div>
+                            <button className="btn btn-light" type="submit">Change Status</button>
+                          </div>
+                        </form>
+                      </div>
                     </div>
-                    <div className="form-group">
-                      <label htmlFor="notes">Notes</label>
-                      <input onChange={this.handleChange} name="notes" className="form-control" id="notes" />
-                    </div>
-                    <div>
-                      <button className="btn btn-light" type="submit">Change Status</button>
-                    </div>
-                  </form>
+                  </div>
                 </div>
               </div>
+            </div>
+            <div className="container">
               <div className="row">
                 <div className="col-md-12">
-                  <input type="text" className="form-control userSearch" placeholder="Search" onChange={this.filterList} pattern="[A-Za-z]"/>
+                  <input type="text" className="form-control userSearch" placeholder="Search" onChange={this.filterList} pattern="[A-Za-z]" />
                 </div>
               </div>
             </div>
@@ -176,8 +194,18 @@ export default class App extends Component {
                 status={user.status}
                 notes={user.notes}
               />
-            )) : <p>No users found</p>}
-            </span>
+            )) : (
+                <div className={`userList`}>
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-md-12">
+                        <p>No users found!</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+          </span>
         ) : (
             <div className="container">
               <div className="row">
