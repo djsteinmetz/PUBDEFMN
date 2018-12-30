@@ -2,7 +2,8 @@
   "name": "pubdefmn",
   "version": "1.0.0",
   "engines": {
-    "node": "10.3.0"
+    "node": "10.3.0",
+    "yarn": "^0.21"
   },
   "description": "",
   "main": "server.js",
