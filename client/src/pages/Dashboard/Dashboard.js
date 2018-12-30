@@ -5,7 +5,7 @@ import moment from 'moment';
 import Nav from "../../components/Nav";
 import UserListItem from "../../components/UserListItem";
 import io from 'socket.io-client';
-const socket = io('http://localhost:3001');
+const socket = io(process.env.PORT || "http://localhost:3001");
 
 export default class App extends Component {
   constructor() {
