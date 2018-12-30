@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { firebase, auth } from "../../firebase"
 import API from "../../utils/API";
 import moment from 'moment';
-// import ModalConductor from "../../components/Modal/ModalConductor";
 import Nav from "../../components/Nav";
 import UserListItem from "../../components/UserListItem";
+import io from 'socket.io-client';
+const socket = io('http://localhost:3001');
 
 export default class App extends Component {
   constructor() {
@@ -25,9 +26,9 @@ export default class App extends Component {
     };
     this.handleSignOut = this.handleSignOut.bind(this);
     this.getAllUsers = this.getAllUsers.bind(this);
+    this.loadUser = this.loadUser.bind(this);
   };
   getAllUsers = () => {
-    console.log('reloading');
     API.loadAllUsers().then(res => this.setState({ allUsers: res.data, filteredUsers: res.data })).catch(err => console.log(err));
   }
   componentWillMount = () => {
@@ -37,9 +38,6 @@ export default class App extends Component {
       status: []
     });
   };
-  componentDidMount = () => {
-
-  }
   loadUser = id => {
     API.loadUser(id)
       .then(res =>
@@ -54,13 +52,11 @@ export default class App extends Component {
       )
       .catch(err => console.log(err));
   };
-
   // Upon page refresh, if the user is logged in, they will stay logged in
   onAuthStateChanged = () => {
     const bindThis = this;
     firebase.auth.onAuthStateChanged(user => {
       if (user) {
-        console.log(user);
         bindThis.setState({ isLoggedIn: true });
         this.loadUser(user.uid)
       } else {
@@ -97,31 +93,33 @@ export default class App extends Component {
   }
   handleStatusChange = e => {
     e.preventDefault();
-    console.log(this.state.newStatus);
-    console.log(this.state.notes);
     const data = {
       status: this.state.status,
       notes: this.state.notes,
       updated: Date.now()
     };
     API.updateStatus(this.state.uid, data).catch(err => console.log(err));
-    this.loadUser(this.state.uid);
-    this.getAllUsers();
+
+    // Emit events
+    socket.emit('user-update', {
+      func: this.getAllUsers(),
+      uid: this.state.uid,
+      status: this.state.status,
+      notes: this.state.notes
+    });
   }
   filterList = event => {
     let updatedList = this.state.allUsers;
-    console.log(updatedList)
-    console.log(event.target.value)
     updatedList = updatedList.filter(function (user) {
-      console.log(user.name.toLowerCase().search(event.target.value.toLowerCase()))
       return user.name.toLowerCase().search(
         event.target.value.toLowerCase()) !== -1;
     });
-    console.log(updatedList);
     this.setState({ filteredUsers: updatedList });
   }
 
   render() {
+    // Listen for events and run custom functions *after* the anon functions of the .on() method.
+    socket.on('user-update', () => { return null }, this.getAllUsers());
     return (
       <React.Fragment>
         <Nav
@@ -152,11 +150,11 @@ export default class App extends Component {
                         </div>
                       </div>
                       <div className="card-body">
-                        <form onSubmit={this.handleStatusChange}>
+                        <form onSubmit={this.handleStatusChange.bind(this)}>
                           <div className="form-group">
                             <label htmlFor="status">Example select</label>
                             <select className="form-control" name="status" id="status" onChange={this.clearNotes}>
-                              <option disabled selected>Select a Status</option>
+                              <option>Select a Status</option>
                               <option>In</option>
                               <option>Out</option>
                               <option value="Court">Court (Specify Judge)</option>
@@ -169,7 +167,7 @@ export default class App extends Component {
                             <input onChange={this.handleChange} name="notes" className="form-control" id="notes" />
                           </div>
                           <div>
-                            <button className="btn btn-light" type="submit">Change Status</button>
+                            <button className="btn btn-light" type="submit" id="updateStatus" onClick={this.userUpdate}>Change Status</button>
                           </div>
                         </form>
                       </div>
@@ -185,26 +183,29 @@ export default class App extends Component {
                 </div>
               </div>
             </div>
-            {this.state.filteredUsers.length ? this.state.filteredUsers.map((user, i) => (
-              <UserListItem
-                key={user.uid}
-                evenOdd={i}
-                name={user.name}
-                updated={user.updated}
-                status={user.status}
-                notes={user.notes}
-              />
-            )) : (
-                <div className={`userList`}>
-                  <div className="container">
-                    <div className="row">
-                      <div className="col-md-12">
-                        <p>No users found!</p>
+            <div id="userList">
+              {this.state.filteredUsers.length ? this.state.filteredUsers.map((user, i) => (
+                  <UserListItem
+                    key={user.uid}
+                    evenOdd={i}
+                    name={user.name}
+                    updated={user.updated}
+                    status={user.status}
+                    notes={user.notes}
+                  />
+                
+              )) : (
+                  <div className={`userList`}>
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <p>No users found!</p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
           </span>
         ) : (
             <div className="container">

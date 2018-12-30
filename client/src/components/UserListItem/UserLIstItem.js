@@ -3,7 +3,6 @@ import moment from 'moment';
 
 const UserListItem = props => {
     function isEven(n) {
-        console.log(n)
         return n === parseFloat(n)? !(n%2) : void 0;
     }      
     return (

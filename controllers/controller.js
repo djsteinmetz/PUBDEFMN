@@ -1,5 +1,12 @@
 const db = require("../models");
 console.log("controller loaded")
+const io = require('socket.io-client');
+const socket = io('http://localhost:3001');
+
+// socket.on('user-update', function(data) {
+//   console.log('data from the users.js api route file', data);
+//   db.User.find().sort({ name: 1 }).then(dbModel => res.json(dbModel));
+// })
 // Defining methods for the PUBDEFMN signIn sheet
 module.exports = {
   findAll: function(req, res) {
