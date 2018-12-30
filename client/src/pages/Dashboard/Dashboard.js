@@ -5,7 +5,7 @@ import moment from 'moment';
 import Nav from "../../components/Nav";
 import UserListItem from "../../components/UserListItem";
 import io from 'socket.io-client';
-const socket = io();
+const socket = io("https://mnpubdef.herokuapp.com" || "localhost");
 
 export default class App extends Component {
   constructor() {
