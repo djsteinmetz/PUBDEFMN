@@ -185,15 +185,15 @@ export default class App extends Component {
             </div>
             <div id="userList">
               {this.state.filteredUsers.length ? this.state.filteredUsers.map((user, i) => (
-                  <UserListItem
-                    key={user.uid}
-                    evenOdd={i}
-                    name={user.name}
-                    updated={user.updated}
-                    status={user.status}
-                    notes={user.notes}
-                  />
-                
+                <UserListItem
+                  key={user.uid}
+                  evenOdd={i}
+                  name={user.name}
+                  updated={user.updated}
+                  status={user.status}
+                  notes={user.notes}
+                />
+
               )) : (
                   <div className={`userList`}>
                     <div className="container">
@@ -205,7 +205,7 @@ export default class App extends Component {
                     </div>
                   </div>
                 )}
-              </div>
+            </div>
           </span>
         ) : (
             <div className="container">
