@@ -29,6 +29,7 @@
     "dotenv": "^6.2.0",
     "express": "^4.15.4",
     "firebase": "^5.5.9",
+    "if-env": "^1.0.4",
     "moment": "^2.23.0",
     "mongoose": "^5.3.14",
     "react-router-dom": "^4.3.1",
