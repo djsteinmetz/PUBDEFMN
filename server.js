@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(routes);
 
 // Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/PUBDEFMN");
+mongoose.connect(process.env.MONGOLAB_BRONZE_URI || "mongodb://localhost/PUBDEFMN");
 
 // Start the API server
 const server = app.listen(PORT, function() {
