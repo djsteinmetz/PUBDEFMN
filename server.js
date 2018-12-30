@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const routes = require("./routes");
 const app = express();
 const PORT = process.env.PORT || 3001;
-const socket = require('socket.io');
+// const socket = require('socket.io');
 
 // Define middleware here
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,11 +27,11 @@ const server = app.listen(PORT, function() {
 });
 
 // Socket setup & pass server
-const io = socket(server);
-io.on('connection', (socket) => {
-  console.log('made socket connection', socket.id);
-  socket.on('user-update', function (data) {
-    console.log("DATA FROM THE SOCKET", data);
-    io.sockets.emit('user-update', data);
-  });
-});
+// const io = socket(server);
+// io.on('connection', (socket) => {
+//   console.log('made socket connection', socket.id);
+//   socket.on('user-update', function (data) {
+//     console.log("DATA FROM THE SOCKET", data);
+//     io.sockets.emit('user-update', data);
+//   });
+// });

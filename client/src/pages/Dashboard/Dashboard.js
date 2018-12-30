@@ -4,8 +4,8 @@ import API from "../../utils/API";
 import moment from 'moment';
 import Nav from "../../components/Nav";
 import UserListItem from "../../components/UserListItem";
-import io from 'socket.io-client';
-const socket = io();
+// import io from 'socket.io-client';
+// const socket = io();
 
 export default class App extends Component {
   constructor() {
@@ -119,7 +119,7 @@ export default class App extends Component {
 
   render() {
     // Listen for events and run custom functions *after* the anon functions of the .on() method.
-    socket.on('user-update', () => { return null }, this.getAllUsers());
+    // socket.on('user-update', () => { return null }, this.getAllUsers());
     return (
       <React.Fragment>
         <Nav
