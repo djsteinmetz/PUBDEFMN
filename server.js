@@ -10,6 +10,11 @@ const socket = require('socket.io');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// Serve up static assets (usually on heroku)
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+
 // Add routes, both API and view
 app.use(routes);
 
@@ -20,11 +25,6 @@ mongoose.connect(process.env.MONGOLAB_BRONZE_URI || "mongodb://localhost/PUBDEFM
 const server = app.listen(PORT, function() {
   console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
 });
-
-// Serve up static assets (usually on heroku)
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-}
 
 // Socket setup & pass server
 const io = socket(server);
