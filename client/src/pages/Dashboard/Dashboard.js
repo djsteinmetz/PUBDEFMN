@@ -101,12 +101,12 @@ export default class App extends Component {
     API.updateStatus(this.state.uid, data).catch(err => console.log(err));
 
     // Emit events
-    socket.emit('user-update', {
-      func: this.getAllUsers(),
-      uid: this.state.uid,
-      status: this.state.status,
-      notes: this.state.notes
-    });
+    // socket.emit('user-update', {
+    //   func: this.getAllUsers(),
+    //   uid: this.state.uid,
+    //   status: this.state.status,
+    //   notes: this.state.notes
+    // });
   }
   filterList = event => {
     let updatedList = this.state.allUsers;
