@@ -4,8 +4,7 @@ import API from "../../utils/API";
 import moment from 'moment';
 import Nav from "../../components/Nav";
 import UserListItem from "../../components/UserListItem";
-// import io from 'socket.io-client';
-// const socket = io();
+import io from 'socket.io-client';
 
 export default class App extends Component {
   constructor() {
@@ -34,8 +33,10 @@ export default class App extends Component {
   componentWillMount = () => {
     this.onAuthStateChanged();
     this.getAllUsers();
+    const socket = io();
     this.setState({
-      status: []
+      status: [],
+      socket: socket
     });
   };
   loadUser = id => {
@@ -101,12 +102,11 @@ export default class App extends Component {
     API.updateStatus(this.state.uid, data).catch(err => console.log(err));
 
     // Emit events
-    // socket.emit('user-update', {
-    //   func: this.getAllUsers(),
-    //   uid: this.state.uid,
-    //   status: this.state.status,
-    //   notes: this.state.notes
-    // });
+    this.state.socket.emit('user-update', {
+      uid: this.state.uid,
+      status: this.state.status,
+      notes: this.state.notes
+    });
   }
   filterList = event => {
     let updatedList = this.state.allUsers;
@@ -119,7 +119,7 @@ export default class App extends Component {
 
   render() {
     // Listen for events and run custom functions *after* the anon functions of the .on() method.
-    // socket.on('user-update', () => { return null }, this.getAllUsers());
+    this.state.socket.on('user-update', () => { return null }, this.getAllUsers());
     return (
       <React.Fragment>
         <Nav
