@@ -45,7 +45,10 @@ export default class App extends Component {
     // Listen for events and run custom functions *after* the anon functions of the .on() method.
     this.state.socket.on('user-update', (data) => {
       console.log(data);
-      API.loadAllUsers().then(res => { console.log(res) });
+      API.loadAllUsers().then(res => { 
+        console.log(res) 
+        this.setState({allUsers: res.data, filteredUsers: res.data});
+      });
     });
   }
   loadUser = id => {
