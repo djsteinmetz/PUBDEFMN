@@ -5,6 +5,7 @@ import moment from 'moment';
 import Nav from "../../components/Nav";
 import UserListItem from "../../components/UserListItem";
 import io from 'socket.io-client';
+const socket = io();
 
 export default class App extends Component {
   constructor() {
@@ -21,7 +22,8 @@ export default class App extends Component {
       // User Authentication
       message: "",
       email: "",
-      password: ""
+      password: "",
+      socket: {}
     };
     this.handleSignOut = this.handleSignOut.bind(this);
     this.getAllUsers = this.getAllUsers.bind(this);
@@ -33,15 +35,18 @@ export default class App extends Component {
   componentWillMount = () => {
     this.onAuthStateChanged();
     this.getAllUsers();
-    const socket = io();
     this.setState({
       status: [],
       socket: socket
     });
   };
-  componentWillUpdate = () => {
+  componentDidMount = () => {
+    console.log('mounted component')
     // Listen for events and run custom functions *after* the anon functions of the .on() method.
-    this.state.socket.on('user-update', (data) => { console.log(data) }, this.getAllUsers());
+    this.state.socket.on('user-update', (data) => {
+      console.log(data);
+      API.loadAllUsers().then(res => { console.log(res) });
+    });
   }
   loadUser = id => {
     API.loadUser(id)
@@ -109,7 +114,8 @@ export default class App extends Component {
     this.state.socket.emit('user-update', {
       uid: this.state.uid,
       status: this.state.status,
-      notes: this.state.notes
+      notes: this.state.notes,
+      getUsers: this.getAllUsers()
     });
   }
   filterList = event => {

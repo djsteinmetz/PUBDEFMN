@@ -10,11 +10,9 @@ export default {
   },
   // Add a new user
   register: function (data) {
-    console.log(data);
     return axios.post("/api/user/", data).catch(err => console.log(err));
   },
   updateStatus: function(id, data) {
-    console.log(data);
     return axios.put("api/user/" + id, data).catch(err => console.log(err));
   }
 };
