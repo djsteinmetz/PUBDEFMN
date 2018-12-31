@@ -39,6 +39,10 @@ export default class App extends Component {
       socket: socket
     });
   };
+  componentDidMount = () => {
+    // Listen for events and run custom functions *after* the anon functions of the .on() method.
+    this.state.socket.on('user-update', () => { return null }, this.getAllUsers());
+  }
   loadUser = id => {
     API.loadUser(id)
       .then(res =>
@@ -118,8 +122,6 @@ export default class App extends Component {
   }
 
   render() {
-    // Listen for events and run custom functions *after* the anon functions of the .on() method.
-    this.state.socket.on('user-update', () => { return null }, this.getAllUsers());
     return (
       <React.Fragment>
         <Nav
