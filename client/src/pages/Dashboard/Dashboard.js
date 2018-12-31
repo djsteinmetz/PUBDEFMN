@@ -39,9 +39,9 @@ export default class App extends Component {
       socket: socket
     });
   };
-  componentDidMount = () => {
+  componentWillUpdate = () => {
     // Listen for events and run custom functions *after* the anon functions of the .on() method.
-    this.state.socket.on('user-update', () => { return null }, this.getAllUsers());
+    this.state.socket.on('user-update', (data) => { console.log(data) }, this.getAllUsers());
   }
   loadUser = id => {
     API.loadUser(id)
