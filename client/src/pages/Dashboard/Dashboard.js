@@ -45,9 +45,9 @@ export default class App extends Component {
     // Listen for events and run custom functions *after* the anon functions of the .on() method.
     this.state.socket.on('user-update', (data) => {
       console.log(data);
-      API.loadAllUsers().then(res => { 
-        console.log(res) 
-        this.setState({allUsers: res.data, filteredUsers: res.data});
+      API.loadAllUsers().then(res => {
+        console.log(res)
+        this.setState({ allUsers: res.data, filteredUsers: res.data });
       });
     });
   }
@@ -150,38 +150,39 @@ export default class App extends Component {
                             <div className="col-md-3 col-9">
                               <p className="currentName">{this.state.name}</p>
                               <p className="timestamp">{moment(this.state.updated).format("MM/DD/YY, h:mm:ss a")}</p>
-                            </div>
-                            <div className="col-md-2 col-1">
                               <p className={`text-center currentStatus ${this.state.status}`}>{this.state.status}</p>
-                            </div>
-                            <div className="col-md-7">
                               <p>{this.state.notes}</p>
+                            </div>
+                            <div className="col-md-9">
+                              <form onSubmit={this.handleStatusChange.bind(this)}>
+                                <div className="row">
+                                  <div className="col-md-6 changeStatus">
+                                    <label htmlFor="status">Change your status</label>
+                                    <select className="form-control" name="status" id="status" onChange={this.clearNotes}>
+                                      <option disabled>{this.state.status}</option>
+                                      <option>In</option>
+                                      <option>Out</option>
+                                      <option value="Court">Court (Specify Judge)</option>
+                                      <option>LEC</option>
+                                      <option>Jail</option>
+                                    </select>
+                                  </div>
+                                  <div className="col-md-6">
+                                    <label htmlFor="notes">Notes</label>
+                                    <input onChange={this.handleChange} name="notes" className="form-control" id="notes" />
+                                  </div>
+                                </div>
+                                <div>
+                                  <button className="btn btn-secondary" type="submit" id="updateStatus" onClick={this.userUpdate}>Change Status</button>
+                                </div>
+                              </form>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="card-body">
-                        <form onSubmit={this.handleStatusChange.bind(this)}>
-                          <div className="form-group">
-                            <label htmlFor="status">Example select</label>
-                            <select className="form-control" name="status" id="status" onChange={this.clearNotes}>
-                              <option>Select a Status</option>
-                              <option>In</option>
-                              <option>Out</option>
-                              <option value="Court">Court (Specify Judge)</option>
-                              <option>LEC</option>
-                              <option>Jail</option>
-                            </select>
-                          </div>
-                          <div className="form-group">
-                            <label htmlFor="notes">Notes</label>
-                            <input onChange={this.handleChange} name="notes" className="form-control" id="notes" />
-                          </div>
-                          <div>
-                            <button className="btn btn-light" type="submit" id="updateStatus" onClick={this.userUpdate}>Change Status</button>
-                          </div>
-                        </form>
-                      </div>
+                      {/* <div className="card-body">
+
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -190,7 +191,7 @@ export default class App extends Component {
             <div className="container">
               <div className="row">
                 <div className="col-md-12">
-                  <input type="text" className="form-control userSearch" placeholder="Search" onChange={this.filterList} pattern="[A-Za-z]" />
+                <input type="text" className="form-control userSearch" placeholder="Search a name" onChange={this.filterList} pattern="[A-Za-z]" />
                 </div>
               </div>
             </div>
