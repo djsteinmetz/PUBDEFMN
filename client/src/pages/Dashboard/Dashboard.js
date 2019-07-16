@@ -139,94 +139,69 @@ export default class App extends Component {
         <Nav isLoggedIn={this.state.isLoggedIn} logout={this.handleSignOut} />
         {this.state.isLoggedIn === true ? (
           <span>
-            <div className="container px-5">
-              <div className="row">
-                <div className="w-full">
-                  <div className="max-w-sm rounded overflow-hidden shadow-lg">
-                    <div className="container p-6 mx-auto">
-                      <div className="row">
-                        <div className="col-md-3 col-9">
-                          <p className="currentName">{this.state.name}</p>
-                          <p className="timestamp">
-                            {moment(this.state.updated).format(
-                              "MM/DD/YY, h:mm:ss a"
-                            )}
-                          </p>
-                          <p
-                            className={`text-center currentStatus ${
-                              this.state.status
-                            }`}
-                          >
-                            {this.state.status}
-                          </p>
-                          <p>{this.state.notes}</p>
-                        </div>
-                        <div className="col-md-9">
-                          <form onSubmit={this.handleStatusChange.bind(this)}>
-                            <div className="row">
-                              <div className="col-md-6 changeStatus">
-                                <label htmlFor="status">
-                                  Change your status
-                                </label>
-                                <select
-                                  className="form-control"
-                                  name="status"
-                                  id="status"
-                                  onChange={this.clearNotes}
-                                >
-                                  <option disabled>{this.state.status}</option>
-                                  <option>In</option>
-                                  <option>Out</option>
-                                  <option value="Court">
-                                    Court (Specify Judge)
-                                  </option>
-                                  <option>LEC</option>
-                                  <option>Jail</option>
-                                </select>
-                              </div>
-                              <div className="col-md-6">
-                                <label htmlFor="notes">Notes</label>
-                                <input
-                                  onChange={this.handleChange}
-                                  name="notes"
-                                  className="form-control"
-                                  id="notes"
-                                />
-                              </div>
-                            </div>
-                            <div>
-                              <button
-                                className="btn btn-secondary"
-                                type="submit"
-                                id="updateStatus"
-                                onClick={this.userUpdate}
-                              >
-                                Change Status
-                              </button>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* <div className="card-body">
-
-                      </div> */}
+            <div className="bg-gray-200 px-6 py-3">
+              <p className="text-2xl font-bold font-gray-800">
+                {this.state.name}
+              </p>
+              <p>{moment(this.state.updated).format("MM/DD/YY, h:mm:ss a")}</p>
+              <p className={`text-center currentStatus ${this.state.status}`}>
+                {this.state.status}
+              </p>
+              {this.state.notes && <p>{this.state.notes}</p>}
+              <form onSubmit={this.handleStatusChange.bind(this)}>
+                <label
+                  class="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="status"
+                >
+                  Change your status
+                </label>
+                <select
+                  name="status"
+                  id="status"
+                  onChange={this.clearNotes}
+                  className="shadow border rounded w-sm py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                >
+                  <option disabled>{this.state.status}</option>
+                  <option>In</option>
+                  <option>Out</option>
+                  <option value="Court">Court (Specify Judge)</option>
+                  <option>LEC</option>
+                  <option>Jail</option>
+                </select>
+                <label
+                  class="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="notes"
+                >
+                  Notes
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-sm py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  value={this.state.notes}
+                  placeholder="Notes about your status ..."
+                  onChange={this.handleChange}
+                  name="notes"
+                  id="notes"
+                />
+                <div>
+                  <button
+                    className="px-4 py-3 bg-gray-400 uppercase font-bold text-sm rounded-lg focus:outline-none focus:shadow-outline"
+                    type="submit"
+                    id="updateStatus"
+                    onClick={this.userUpdate}
+                  >
+                    Change Status
+                  </button>
                 </div>
-              </div>
+              </form>
             </div>
             <div className="container px-5">
-              <div className="row">
-                <div className="col-md-12">
-                  <input
-                    type="text"
-                    className="form-control userSearch"
-                    placeholder="Search a name"
-                    onChange={this.filterList}
-                    pattern="[A-Za-z]"
-                  />
-                </div>
-              </div>
+              <input
+                type="text"
+                className="shadow appearance-none border rounded w-100 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="Search a name"
+                onChange={this.filterList}
+                pattern="[A-Za-z]"
+              />
             </div>
             <div id="userList">
               {this.state.filteredUsers.length ? (
