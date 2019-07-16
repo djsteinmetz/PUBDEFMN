@@ -1,7 +1,7 @@
 * {
     font-family: 'Roboto', sans-serif !Important;
 }
-
+/*
 .In {
     border-radius: 180px;
     border: 1px solid #0b6527;
@@ -57,13 +57,11 @@
 
 .timestamp {
     font-size: 12px;
-    /* margin-top: -10px; */
     color: #A7A7A7;
 }
 
 .currentUser {
     padding: 25px 0px 25px 0px;
-    /* background-color: #0b576531; */
 }
 
 .currentName {
@@ -100,4 +98,4 @@
     .changeStatus {
         margin-bottom: 25px;
     }
-}
+}*/
