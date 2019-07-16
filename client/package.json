@@ -16,7 +16,7 @@
   "scripts": {
     "start": "concurrently \"npm run tailwind\" \"react-scripts start\"",
     "build": "react-scripts build",
-    "tailwind": "postcss css/tailwind.css -o public/build/tailwind.css",
+    "tailwind": "postcss public/tailwind.css -o public/build/tailwind.css",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
